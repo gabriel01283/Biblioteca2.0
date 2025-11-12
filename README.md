@@ -57,7 +57,7 @@ Assim, o comportamento do livro muda dinamicamente sem precisar de condicionais 
 
 ## Instalação
 
-1- Clone o repositorio:https://github.com/gabriel01283/Biblioteca2.0
+1- Clone o repositorio: https://github.com/gabriel01283/Biblioteca2.0
 
 2- Abra o projeto na IDE ja instalada no seu sistema
 
