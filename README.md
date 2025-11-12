@@ -45,7 +45,11 @@ Assim, o comportamento do livro muda dinamicamente sem precisar de condicionais 
 - Usado para monitorar o estado dos livros.
 - Quando um novo livro é criado ou seu estado é alterado, os observadores são notificados (por exemplo, o sistema pode atualizar automaticamente a lista de livros disponíveis).
 -	Isso facilita a comunicação entre as partes do sistema sem criar dependências diretas.
--	
+  
+### **Singleton**
+- Aplicado à classe Bibliotecário para garantir que apenas uma instância exista em todo o sistema.
+- Isso impede a criação de múltiplos bibliotecários simultaneamente, mantendo o controle centralizado das operações administrativas (como verificar logins, livros e multas).
+
 ## Tecnologias Utilizadas
 -java
 
@@ -60,11 +64,11 @@ Assim, o comportamento do livro muda dinamicamente sem precisar de condicionais 
 4- execute o projeto
 
 
-## Diagrama de classes:
+## Diagrama de Casos de Uso:
 <img width="374" height="759" alt="image" src="https://github.com/user-attachments/assets/39f05928-414c-481b-8b14-0f3a917b0bde" />
 
 
-## Diagrama de casos de uso:
+## Diagrama de Classes:
 
 <img width="407" height="577" alt="image" src="https://github.com/user-attachments/assets/3e98a273-e6d9-4bcb-8ffa-c26cd26da810" />
 
