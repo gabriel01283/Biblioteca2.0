@@ -61,11 +61,12 @@ Assim, o comportamento do livro muda dinamicamente sem precisar de condicionais 
 
 
 ## Diagrama de classes:
+<img width="374" height="759" alt="image" src="https://github.com/user-attachments/assets/39f05928-414c-481b-8b14-0f3a917b0bde" />
 
 
 ## Diagrama de casos de uso:
 
-
+<img width="407" height="577" alt="image" src="https://github.com/user-attachments/assets/3e98a273-e6d9-4bcb-8ffa-c26cd26da810" />
 
 ## Autora
 - Gabriel Saraiva Sampaio (https://github.com/gabriel01283)
