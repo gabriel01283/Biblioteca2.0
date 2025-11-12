@@ -1,0 +1,38 @@
+@startuml
+class Usuario {
+    - nome: String
+    - login: String
+    - senha: String
+    + realizarLogin(): boolean
+}
+
+class Aluno {
+    + consultarLivros(): void
+    + verificarLivros(): void
+    + verificarGeneros(): void
+}
+
+class Bibliotecario {
+    + verificarLogins(): void
+    + verificarLivros(): void
+    + verificarGeneros(): void
+    + verificarMultas(): void
+    + excluirLivro(): void
+    + cadastrarLivro(): void
+    + alterarStatusLivro(): void
+    + gerarDataEntrega(): void
+}
+
+class Livro {
+    - titulo: String
+    - genero: String
+    - status: String
+    - dataEntrega: Date
+}
+
+Usuario <|-- Aluno
+Usuario <|-- Bibliotecario
+
+Aluno --> Livro : consulta >
+Bibliotecario --> Livro : gerencia >
+@enduml

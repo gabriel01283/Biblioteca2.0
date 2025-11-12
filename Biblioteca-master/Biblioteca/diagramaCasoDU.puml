@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+actor "Aluno" as Aluno
+actor "Bibliotecário" as Bibliotecario
+
+rectangle "Sistema da Biblioteca" {
+    (Consultar livros disponíveis) as UC1
+    (Realizar login) as UC2
+    (Verificar livros) as UC3
+    (Verificar gêneros) as UC4
+    (Verificar logins) as UC5
+    (Verificar multas por atraso) as UC6
+    (Excluir livros) as UC7
+    (Cadastrar livros) as UC8
+    (Alterar status do livro) as UC9
+    (Gerar data de entrega) as UC10
+}
+
+Aluno --> UC1
+Aluno --> UC2
+Aluno --> UC3
+Aluno --> UC4
+
+Bibliotecario --> UC2
+Bibliotecario --> UC3
+Bibliotecario --> UC4
+Bibliotecario --> UC5
+Bibliotecario --> UC6
+Bibliotecario --> UC7
+Bibliotecario --> UC8
+Bibliotecario --> UC9
+Bibliotecario --> UC10
+@enduml
