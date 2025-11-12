@@ -15,6 +15,11 @@ public class Bibliotecario implements Usuario{
     }
 
     @Override
+    public void separador(){
+        System.out.println("#####################");
+    }
+
+    @Override
     public String getNome(){
 
         return nome;
