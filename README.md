@@ -36,7 +36,7 @@ Organiza o sistema em três camadas principais:
 ### **Factory**
 Responsável pela **criação de objetos** de forma centralizada e desacoplada.  
 Facilita a criação de diferentes tipos de usuários (como `Aluno` e `Funcionario`) sem modificar o código principal.
-### ** state**
+### **state**
 -	Implementado na classe Livro para representar o estado atual do livro.
 -	Permite identificar se o livro está disponível, emprestado ou atrasado, além de controlar as mudanças de estado conforme ações do sistema.
 Assim, o comportamento do livro muda dinamicamente sem precisar de condicionais extensas no código.
@@ -68,5 +68,5 @@ Assim, o comportamento do livro muda dinamicamente sem precisar de condicionais 
 
 
 ## Autora
-
+- Gabriel Saraiva Sampaio (https://github.com/gabriel01283)
 - Maria Clara Nascimento Silva (https://github.com/clarrinha)
