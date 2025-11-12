@@ -10,7 +10,7 @@ public class Aluno implements Usuario{
     @Override
     public void mostrarTipo(){
 
-        System.out.println("Sou um aluno!");
+        System.out.println("Sou um aluno(a)!");
     }
     @Override
     public void separador(){
