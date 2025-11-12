@@ -10,7 +10,7 @@ public class Funcionario implements Usuario {
     @Override
     public void mostrarTipo(){
 
-        System.out.println("Sou um funcionario!");
+        System.out.println("Sou um(a) funcionario(a)!");
     }
 
     @Override
