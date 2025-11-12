@@ -12,7 +12,11 @@ public class Main {
 
         // Mostrando os objetos
         System.out.println(aluno);
-        System.out.println(prof);
+        aluno.mostrarTipo();
+        aluno.separador();
+
+        System.out.println(funcionario);
+        funcionario.mostrarTipo();
     }
 }
 
