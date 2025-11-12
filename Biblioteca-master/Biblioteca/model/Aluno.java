@@ -4,7 +4,7 @@ public class Aluno implements Usuario{
 
     public Aluno(String nome){
         this.nome = nome;
-        this.tipo = "Aluno";
+        this.tipo = "Aluno(a)";
     }
 
     @Override
