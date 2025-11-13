@@ -1,69 +1,80 @@
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Livro {
 
-
     private String titulo;
     private String genero;
-    private String status;      // Ex: "Disponível", "Emprestado"
-    private Date dataEntrega;   // Data prevista para devolução
+    private EstadoLivro estado;          // State
+    private Date dataEntrega;
 
+    private List<ObservadorLivro> observadores = new ArrayList<>();  // Observer
 
-    public Livro(String titulo, String genero, String status, Date dataEntrega) {
+    public Livro(String titulo, String genero, EstadoLivro estadoInicial) {
         this.titulo = titulo;
         this.genero = genero;
-        this.status = status;
-        this.dataEntrega = dataEntrega;
-    }
-    public String getTitulo() {
-
-        return titulo;
+        this.estado = estadoInicial;
+        this.dataEntrega = null;
     }
 
-    public void setTitulo(String titulo) {
-
-        this.titulo = titulo;
+    // Métodos que delegam ao Estado
+    public void emprestar(Date dataEntrega) {
+        if (estado != null) {
+            estado.emprestar(this);
+            this.dataEntrega = dataEntrega;
+        }
     }
 
-    public String getGenero() {
-
-        return genero;
+    public void devolver() {
+        if (estado != null) {
+            estado.devolver(this);
+            this.dataEntrega = null;
+        }
     }
 
-    public void setGenero(String genero) {
-
-        this.genero = genero;
+    // Observer
+    public void adicionarObservador(ObservadorLivro obs) {
+        if (obs != null && !observadores.contains(obs)) {
+            observadores.add(obs);
+        }
     }
 
-    public String getStatus() {
-
-        return status;
+    public void removerObservador(ObservadorLivro obs) {
+        observadores.remove(obs);
     }
 
-    public void setStatus(String status) {
-
-        this.status = status;
+    public void notificar(String mensagem) {
+        for (ObservadorLivro obs : new ArrayList<>(observadores)) {
+            obs.atualizar(this, mensagem);
+        }
     }
 
-    public Date getDataEntrega() {
+    // Getters e setters
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-        return dataEntrega;
+    public String getGenero() { return genero; }
+    public void setGenero(String genero) { this.genero = genero; }
+
+    public EstadoLivro getEstado() { return estado; }
+
+    public void setEstado(EstadoLivro estado) {
+        this.estado = estado;
+        notificar("Estado alterado para: " + estado.getNomeEstado());
     }
 
-    public void setDataEntrega(Date dataEntrega) {
+    public Date getDataEntrega() { return dataEntrega; }
+    public void setDataEntrega(Date dataEntrega) { this.dataEntrega = dataEntrega; }
 
-        this.dataEntrega = dataEntrega;
-    }
-
-  
     @Override
     public String toString() {
-        return "Livro {" +
-                "Título='" + titulo + '\'' +
-                ", Gênero='" + genero + '\'' +
-                ", Status='" + status + '\'' +
-                ", Data de Entrega=" + dataEntrega +
+        return "Livro{" +
+                "titulo='" + titulo + '\'' +
+                ", genero='" + genero + '\'' +
+                ", estado=" + (estado != null ? estado.getNomeEstado() : "null") +
+                ", dataEntrega=" + dataEntrega +
                 '}';
     }
 }

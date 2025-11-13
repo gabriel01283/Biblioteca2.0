@@ -5,6 +5,4 @@ public class AlunoFactory extends  UsuarioFactory{
 
         return new Aluno(nome);
     }
-
-
 }

@@ -12,11 +12,12 @@ public class Aluno implements Usuario{
 
         System.out.println("Sou um aluno(a)!");
     }
+
     @Override
     public void separador(){
         System.out.println("#####################");
     }
-    
+
     @Override
     public String getNome(){
 
