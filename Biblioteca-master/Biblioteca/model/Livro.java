@@ -11,6 +11,7 @@ public class Livro {
     private Date dataEntrega;
 
     private List<ObservadorLivro> observadores = new ArrayList<>();  // Observer
+    //faz uma copia da lista assim evita erros de concorrência
 
     public Livro(String titulo, String genero, EstadoLivro estadoInicial) {
         this.titulo = titulo;
@@ -20,13 +21,14 @@ public class Livro {
     }
 
     // Métodos que delegam ao Estado
+    // Pergunta o estado do livro e verifica se ele esta disponivel ou emprestado, dependendo do resultado gera a data de entrega
     public void emprestar(Date dataEntrega) {
         if (estado != null) {
             estado.emprestar(this);
             this.dataEntrega = dataEntrega;
         }
     }
-
+// chama o metodo e verifica o estado atual se a devolução for permitida o status muda para disponível e a data de entrega é apagada
     public void devolver() {
         if (estado != null) {
             estado.devolver(this);

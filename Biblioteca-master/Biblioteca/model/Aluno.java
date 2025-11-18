@@ -1,7 +1,8 @@
 public class Aluno implements Usuario{
+    // pode ser definido apenas uma vez tornando mais seguro e sem mudanças
     private final String nome;
     private final String tipo;
-
+ //construtor para passar o nome do aluno 
     public Aluno(String nome){
         this.nome = nome;
         this.tipo = "Aluno(a)";

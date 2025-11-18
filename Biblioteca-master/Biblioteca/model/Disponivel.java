@@ -1,5 +1,5 @@
 public class Disponivel implements EstadoLivro {
-
+// padrao state, muda de acordo com a disponíbildade do livro 
     @Override
     public void emprestar(Livro livro) {
         livro.setEstado(new Emprestado());

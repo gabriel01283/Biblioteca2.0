@@ -4,7 +4,7 @@ public class LivroFactory {
 
     // Cria livro novo, disponível
     public static Livro criarLivro(String titulo, String genero) {
-        EstadoLivro estadoInicial = new Disponivel(); // estado inicial
+        EstadoLivro estadoInicial = new Disponivel(); // metodo state, controla o estado inicial
         return new Livro(titulo, genero, estadoInicial);
     }
 
