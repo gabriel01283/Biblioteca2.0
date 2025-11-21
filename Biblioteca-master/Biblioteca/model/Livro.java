@@ -22,12 +22,13 @@ public class Livro {
 
     // Métodos que delegam ao Estado
     // Pergunta o estado do livro e verifica se ele esta disponivel ou emprestado, dependendo do resultado gera a data de entrega
-    public void emprestar(Date dataEntrega) {
-        if (estado != null) {
-            estado.emprestar(this);
-            this.dataEntrega = dataEntrega;
-        }
+    public void emprestar() {
+    if (estado != null) {
+        estado.emprestar(this);
+        gerarDataEntregaAutomatica(7); // gera automaticamente, 7 dias à frente
     }
+}
+
 // chama o metodo e verifica o estado atual se a devolução for permitida o status muda para disponível e a data de entrega é apagada
     public void devolver() {
         if (estado != null) {
@@ -52,6 +53,11 @@ public class Livro {
             obs.atualizar(this, mensagem);
         }
     }
+    public void gerarDataEntregaAutomatica(int dias) {
+        Date hoje = new Date();
+        long milis = hoje.getTime() + (long) dias * 24 * 60 * 60 * 1000;
+        this.dataEntrega = new Date(milis);
+}
 
     // Getters e setters
     public String getTitulo() { return titulo; }
