@@ -15,6 +15,11 @@ public class Bibliotecario implements Usuario {
         this.livroController = new LivroController(); // controlador do CRUD
     }
 
+    public boolean autenticar(String cpf, String senha) {
+        return this.cpf.equals(cpf) && this.senhaCriptografada.equals(Criptografia.criptografar(senha));
+    }
+
+
     public static Bibliotecario getInstancia(String nome, String cpf, String senhaCriptografada) {
         if (instancia == null) {
             instancia = new Bibliotecario(nome, cpf, senhaCriptografada);
