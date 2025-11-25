@@ -1,8 +1,7 @@
-public class Aluno implements Usuario{
-    // pode ser definido apenas uma vez tornando mais seguro e sem mudanças
+public class Aluno implements Usuario {
     private final String nome;
     private final String tipo;
- //construtor para passar o nome do aluno 
+
     public Aluno(String nome){
         this.nome = nome;
         this.tipo = "Aluno(a)";
@@ -10,7 +9,6 @@ public class Aluno implements Usuario{
 
     @Override
     public void mostrarTipo(){
-
         System.out.println("Sou um aluno(a)!");
     }
 
@@ -21,19 +19,16 @@ public class Aluno implements Usuario{
 
     @Override
     public String getNome(){
-
         return nome;
     }
 
     @Override
     public String getTipo(){
-
         return tipo;
     }
 
     @Override
     public String toString(){
-
         return tipo + ": " + nome;
     }
 }

@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Livro {
 
-    private static final int PRAZO_PADRAO = 7; // dias para devolução automática
+    private static final int PRAZO_PADRAO = 7;
 
     private String titulo;
     private String genero;
@@ -22,8 +20,6 @@ public class Livro {
         this.emprestadoPara = null;
     }
 
-    // ===================== MÉTODOS PRINCIPAIS =====================
-
     public void emprestar() {
         if (estado != null) {
             estado.emprestar(this);
@@ -32,7 +28,7 @@ public class Livro {
         }
     }
 
-    public void emprestarPara(Usuario usuario) {
+    public void emprestar(Usuario usuario) {
         this.emprestar();
         this.emprestadoPara = usuario;
         notificar("Livro emprestado para: " + usuario.getNome());
@@ -41,11 +37,10 @@ public class Livro {
     public void emprestar(Date dataEntrega) {
         if (estado != null) {
             estado.emprestar(this);
-            this.dataEntrega = dataEntrega;  // define a data de entrega passada
+            this.dataEntrega = dataEntrega;
             notificar("Livro emprestado. Data de entrega: " + dataEntrega);
         }
     }
-
 
     public void devolver() {
         if (estado != null) {
@@ -55,8 +50,6 @@ public class Livro {
             notificar("Livro devolvido.");
         }
     }
-
-    // ===================== OBSERVER =====================
 
     public void adicionarObservador(ObservadorLivro obs) {
         if (obs != null && !observadores.contains(obs)) {
@@ -74,15 +67,11 @@ public class Livro {
         }
     }
 
-    // ===================== AUXILIARES =====================
-
     private void gerarDataEntregaAutomatica(int dias) {
         Date hoje = new Date();
         long milis = hoje.getTime() + (long) dias * 24 * 60 * 60 * 1000;
         this.dataEntrega = new Date(milis);
     }
-
-    // ===================== GETTERS & SETTERS =====================
 
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -91,7 +80,6 @@ public class Livro {
     public void setGenero(String genero) { this.genero = genero; }
 
     public EstadoLivro getEstado() { return estado; }
-
     public void setEstado(EstadoLivro estado) {
         this.estado = estado;
         notificar("Estado alterado para: " + (estado != null ? estado.getNomeEstado() : "null"));
@@ -102,8 +90,6 @@ public class Livro {
 
     public Date getDataEntrega() { return dataEntrega; }
     public void setDataEntrega(Date dataEntrega) { this.dataEntrega = dataEntrega; }
-
-    // ===================== TO STRING =====================
 
     @Override
     public String toString() {

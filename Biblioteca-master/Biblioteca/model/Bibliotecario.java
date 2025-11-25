@@ -4,30 +4,27 @@ public class Bibliotecario implements Usuario {
 
     private String nome;
     private String cpf;
-    private String senhaCriptografada;
+    private String senha;
 
     private LivroController livroController; // acesso ao CRUD
 
-    private Bibliotecario(String nome, String cpf, String senhaCriptografada) {
+    private Bibliotecario(String nome, String cpf, String senha) {
         this.nome = nome;
         this.cpf = cpf;
-        this.senhaCriptografada = senhaCriptografada;
-        this.livroController = new LivroController(); // controlador do CRUD
+        this.senha = senha;
+        this.livroController = new LivroController();
     }
 
     public boolean autenticar(String cpf, String senha) {
-        return this.cpf.equals(cpf) && this.senhaCriptografada.equals(Criptografia.criptografar(senha));
+        return this.cpf.equals(cpf) && this.senha.equals(senha);
     }
 
-
-    public static Bibliotecario getInstancia(String nome, String cpf, String senhaCriptografada) {
+    public static Bibliotecario getInstancia(String nome, String cpf, String senha) {
         if (instancia == null) {
-            instancia = new Bibliotecario(nome, cpf, senhaCriptografada);
+            instancia = new Bibliotecario(nome, cpf, senha);
         }
         return instancia;
     }
-
-    // ========== MÉTODOS DO USUARIO ==========
 
     @Override
     public void mostrarTipo() {
@@ -44,8 +41,6 @@ public class Bibliotecario implements Usuario {
 
     @Override
     public String getTipo() { return "Bibliotecário"; }
-
-    // ========== ACESSO AO CRUD ==========
 
     public void cadastrarLivro(String titulo, String genero) {
         livroController.cadastrarLivro(titulo, genero);
@@ -71,8 +66,6 @@ public class Bibliotecario implements Usuario {
         livroController.listarLivros();
     }
 
-    // GETTERS
-
     public String getCpf() { return cpf; }
-    public String getSenhaCriptografada() { return senhaCriptografada; }
+    public String getSenha() { return senha; }
 }

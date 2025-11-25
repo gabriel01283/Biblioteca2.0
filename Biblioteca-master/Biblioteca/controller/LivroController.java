@@ -1,20 +1,19 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Calendar;
+import java.util.*;
 
 public class LivroController {
 
     private List<Livro> livros = new ArrayList<>();
 
-    // ===================== CADASTRAR =====================
+    public List<Livro> listarTodosComoLista() {
+        return new ArrayList<>(livros);
+    }
+
     public void cadastrarLivro(String titulo, String genero) {
         Livro livro = new Livro(titulo, genero, new Disponivel());
         livros.add(livro);
         System.out.println("Livro cadastrado: " + titulo);
     }
 
-    // ===================== REMOVER =====================
     public void removerLivro(String titulo) {
         Livro livro = buscarLivro(titulo);
         if (livro != null) {
@@ -25,7 +24,6 @@ public class LivroController {
         }
     }
 
-    // ===================== ALTERAR =====================
     public void alterarGenero(String titulo, String novoGenero) {
         Livro livro = buscarLivro(titulo);
         if (livro != null) {
@@ -36,7 +34,6 @@ public class LivroController {
         }
     }
 
-    // ===================== EMPRESTAR =====================
     public void emprestarLivro(String titulo, int diasEntrega) {
         Livro livro = buscarLivro(titulo);
         if (livro != null) {
@@ -50,7 +47,6 @@ public class LivroController {
         }
     }
 
-    // ===================== DEVOLVER =====================
     public void devolverLivro(String titulo) {
         Livro livro = buscarLivro(titulo);
         if (livro != null) {
@@ -61,7 +57,6 @@ public class LivroController {
         }
     }
 
-    // ===================== LISTAR =====================
     public void listarLivros() {
         System.out.println("---- LISTA DE LIVROS ----");
         if (livros.isEmpty()) {
@@ -73,7 +68,6 @@ public class LivroController {
         }
     }
 
-    // ===================== BUSCAR =====================
     private Livro buscarLivro(String titulo) {
         for (Livro l : livros) {
             if (l.getTitulo().equalsIgnoreCase(titulo)) {
