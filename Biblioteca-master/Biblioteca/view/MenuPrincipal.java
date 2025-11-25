@@ -34,16 +34,21 @@ public class MenuPrincipal {
     }
 
     private static void menuBibliotecario(Bibliotecario biblio, List<Livro> livros) {
+        String cpf;
+        while (true) {
+             System.out.print("\nDigite seu CPF (11 dígitos): ");
+                cpf = sc.nextLine().trim();
 
-        System.out.print("\nDigite seu CPF: ");
-        String cpf = sc.nextLine();
-        System.out.print("Digite sua senha: ");
-        String senha = sc.nextLine();
+            // valida: só números e exatamente 11 dígitos
+            if (cpf.matches("\\d{11}")) {
+                break; // CPF válido → sai do loop
+             }
 
-        if (!biblio.autenticar(cpf, senha)) {
-            System.out.println("CPF ou senha incorretos!");
-            return;
+             System.out.println("CPF inválido! Digite apenas números e com exatamente 11 dígitos.");
         }
+
+            System.out.print("Digite sua senha: ");
+            String senha = sc.nextLine();
 
         int opcao;
         do {
@@ -103,7 +108,7 @@ public class MenuPrincipal {
 
         Livro livro = new Livro(titulo, genero, new Disponivel());
         livros.add(livro);
-        System.out.println("✔ Livro cadastrado com sucesso!");
+        System.out.println(" Livro cadastrado com sucesso!");
     }
 
     private static void removerLivro(List<Livro> livros) {
@@ -152,13 +157,29 @@ public class MenuPrincipal {
         Livro livro = livros.get(index);
         biblio.devolverLivro(livro.getTitulo());
     }
+private static void listarLivros(List<Livro> livros) {
+    System.out.println("\n========== LIVROS CADASTRADOS ==========");
 
-    private static void listarLivros(List<Livro> livros) {
-        System.out.println("\n===== LIVROS CADASTRADOS =====");
-        if (livros.isEmpty()) { System.out.println("Nenhum livro cadastrado."); return; }
-        int i = 1;
-        for (Livro l : livros) { System.out.println(i++ + " - " + l); }
+    if (livros.isEmpty()) {
+        System.out.println("Nenhum livro cadastrado.");
+        return;
     }
+
+    System.out.printf("%-5s %-30s %-20s %-15s%n",
+            "Nº", "Título", "Gênero", "Estado");
+
+    System.out.println("---------------------------------------------------------------");
+
+    int i = 1;
+    for (Livro l : livros) {
+        System.out.printf("%-5d %-30s %-20s %-15s%n",
+                i++,
+                l.getTitulo(),
+                l.getGenero(),
+                l.getEstado().getNomeEstado()
+        );
+    }
+}
 
     private static void listarEmprestados(List<Livro> livros) {
         System.out.println("\n===== LIVROS EMPRESTADOS =====");
