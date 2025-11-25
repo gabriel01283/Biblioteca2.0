@@ -3,6 +3,7 @@ import java.util.*;
 public class MenuPrincipal {
 
     private static Scanner sc = new Scanner(System.in);
+    private static LivroController livroController = new LivroController();
 
     public static void main(String[] args) {
 
@@ -12,8 +13,6 @@ public class MenuPrincipal {
                 "11122233344",
                 "12345"
         );
-
-        List<Livro> livros = new ArrayList<>();
 
         while (true) {
             System.out.println("\n========= SISTEMA DA BIBLIOTECA =========");
@@ -25,8 +24,8 @@ public class MenuPrincipal {
             int opcao = lerNumero();
 
             switch (opcao) {
-                case 1 -> menuBibliotecario(biblio, livros);
-                case 2 -> menuAluno(livros);
+                case 1 -> menuBibliotecario(biblio);
+                case 2 -> menuAluno();
                 case 3 -> {
                     System.out.println("Encerrando o sistema...");
                     return;
@@ -36,10 +35,10 @@ public class MenuPrincipal {
         }
     }
 
-    // ====================== MENU BIBLIOTECARIO ======================
-    private static void menuBibliotecario(Bibliotecario biblio, List<Livro> livros) {
+    // ===================== MENU BIBLIOTECÁRIO =====================
+    private static void menuBibliotecario(Bibliotecario biblio) {
 
-        System.out.print("\nDigite seu CPF: ");
+        System.out.print("\nDigite seu CPF (11 dígitos): ");
         String cpf = sc.nextLine().trim();
 
         System.out.print("Digite sua senha: ");
@@ -58,7 +57,7 @@ public class MenuPrincipal {
             System.out.println("3 - Alterar Livro");
             System.out.println("4 - Emprestar Livro");
             System.out.println("5 - Devolver Livro");
-            System.out.println("6 - Listar Livros Cadastrados");
+            System.out.println("6 - Listar Todos os Livros");
             System.out.println("7 - Listar Livros Emprestados");
             System.out.println("8 - Voltar");
             System.out.print("Escolha: ");
@@ -66,21 +65,21 @@ public class MenuPrincipal {
             opcao = lerNumero();
 
             switch (opcao) {
-                case 1 -> cadastrarLivro(livros);
-                case 2 -> removerLivro(livros);
-                case 3 -> alterarLivro(livros);
-                case 4 -> emprestarLivro(biblio, livros);
-                case 5 -> devolverLivro(biblio, livros);
-                case 6 -> listarLivros(livros);
-                case 7 -> listarEmprestados(livros);
+                case 1 -> cadastrarLivro();
+                case 2 -> removerLivro();
+                case 3 -> alterarLivro();
+                case 4 -> emprestarLivro(biblio);
+                case 5 -> devolverLivro(biblio);
+                case 6 -> listarLivros();
+                case 7 -> listarEmprestados();
                 case 8 -> System.out.println("Voltando...");
                 default -> System.out.println("Opção inválida!");
             }
         } while (opcao != 8);
     }
 
-    // ====================== MENU ALUNO ======================
-    private static void menuAluno(List<Livro> livros) {
+    // ===================== MENU ALUNO =====================
+    private static void menuAluno() {
         int opcao;
         do {
             System.out.println("\n===== MENU DO ALUNO =====");
@@ -92,47 +91,42 @@ public class MenuPrincipal {
 
             opcao = lerNumero();
             switch (opcao) {
-                case 1 -> listarPorGenero(livros);
-                case 2 -> listarDisponiveis(livros);
-                case 3 -> solicitarEmprestimo(livros);
+                case 1 -> listarPorGenero();
+                case 2 -> listarDisponiveis();
+                case 3 -> solicitarEmprestimo();
                 case 4 -> System.out.println("Voltando...");
                 default -> System.out.println("Opção inválida!");
             }
         } while (opcao != 4);
     }
 
-    // ====================== MÉTODOS BIBLIOTECARIO ======================
-    private static void cadastrarLivro(List<Livro> livros) {
+    // ===================== AÇÕES =====================
+    private static void cadastrarLivro() {
         System.out.print("\nTítulo: ");
         String titulo = sc.nextLine();
         System.out.print("Gênero: ");
         String genero = sc.nextLine();
 
-        Livro livro = new Livro(titulo, genero, new Disponivel());
-        livros.add(livro);
+        livroController.cadastrarLivro(titulo, genero);
         System.out.println("Livro cadastrado com sucesso!");
     }
 
-    private static void removerLivro(List<Livro> livros) {
-        listarLivros(livros);
+    private static void removerLivro() {
+        listarLivros();
         System.out.print("\nDigite o número do livro para remover: ");
         int index = lerNumero() - 1;
-        if (index < 0 || index >= livros.size()) {
-            System.out.println("Livro não encontrado!");
-            return;
-        }
-        livros.remove(index);
-        System.out.println("✔ Livro removido!");
+        List<Livro> livros = livroController.listarTodosComoLista();
+        if (index < 0 || index >= livros.size()) { System.out.println("Livro não encontrado!"); return; }
+        livroController.removerLivro(livros.get(index).getTitulo());
+        System.out.println("Livro removido!");
     }
 
-    private static void alterarLivro(List<Livro> livros) {
-        listarLivros(livros);
+    private static void alterarLivro() {
+        listarLivros();
         System.out.print("\nEscolha o número do livro para alterar: ");
         int index = lerNumero() - 1;
-        if (index < 0 || index >= livros.size()) {
-            System.out.println("Livro não encontrado!");
-            return;
-        }
+        List<Livro> livros = livroController.listarTodosComoLista();
+        if (index < 0 || index >= livros.size()) { System.out.println("Livro não encontrado!"); return; }
 
         Livro livro = livros.get(index);
         System.out.print("Novo título (enter para manter): ");
@@ -142,113 +136,102 @@ public class MenuPrincipal {
         String novoGenero = sc.nextLine();
         if (!novoGenero.isBlank()) livro.setGenero(novoGenero);
 
-        System.out.println("✔ Livro alterado com sucesso!");
+        System.out.println("Livro alterado com sucesso!");
     }
 
-    private static void emprestarLivro(Bibliotecario biblio, List<Livro> livros) {
-        listarDisponiveis(livros);
+    private static void emprestarLivro(Bibliotecario biblio) {
+        listarDisponiveis();
         System.out.print("\nEscolha o número do livro para emprestar: ");
         int index = lerNumero() - 1;
-        if (index < 0 || index >= livros.size()) {
-            System.out.println("Livro não encontrado!");
-            return;
-        }
+        List<Livro> livros = livroController.listarTodosComoLista();
+        if (index < 0 || index >= livros.size()) { System.out.println("Livro não encontrado!"); return; }
 
         Livro livro = livros.get(index);
         biblio.emprestarLivro(livro.getTitulo(), 7);
     }
 
-    private static void devolverLivro(Bibliotecario biblio, List<Livro> livros) {
-        listarEmprestados(livros);
+    private static void devolverLivro(Bibliotecario biblio) {
+        listarEmprestados();
         System.out.print("\nEscolha o número do livro para devolver: ");
         int index = lerNumero() - 1;
-        if (index < 0 || index >= livros.size()) {
-            System.out.println("Livro não encontrado!");
-            return;
-        }
+        List<Livro> livros = livroController.listarTodosComoLista();
+        if (index < 0 || index >= livros.size()) { System.out.println("Livro não encontrado!"); return; }
+
         Livro livro = livros.get(index);
         biblio.devolverLivro(livro.getTitulo());
     }
 
-    private static void listarLivros(List<Livro> livros) {
-        System.out.println("\n===== LIVROS CADASTRADOS =====");
+    private static void listarLivros() {
+        List<Livro> livros = livroController.listarTodosComoLista();
+        System.out.println("\n========== LIVROS CADASTRADOS ==========");
+        if (livros.isEmpty()) { System.out.println("Nenhum livro cadastrado."); return; }
 
-        if (livros.isEmpty()) {
-            System.out.println("Nenhum livro cadastrado.");
-            return;
-        }
-
-        int i = 1;
-        for (Livro l : livros) {
-            System.out.println(i++ + " - " + l);
+        for (int i = 0; i < livros.size(); i++) {
+            Livro l = livros.get(i);
+            System.out.printf("%d - %s (%s) - %s%n", i+1, l.getTitulo(), l.getGenero(), l.getEstado().getNomeEstado());
         }
     }
 
-    private static void listarEmprestados(List<Livro> livros) {
+    private static void listarEmprestados() {
+        List<Livro> livros = livroController.listarTodosComoLista();
         System.out.println("\n===== LIVROS EMPRESTADOS =====");
         boolean encontrou = false;
-        int i = 1;
-        for (Livro l : livros) {
+        for (int i = 0; i < livros.size(); i++) {
+            Livro l = livros.get(i);
             if (!l.getEstado().getNomeEstado().equals("Disponível")) {
-                System.out.println(i + " - " + l);
+                System.out.printf("%d - %s (%s) - %s%n", i+1, l.getTitulo(), l.getGenero(), l.getEstado().getNomeEstado());
                 encontrou = true;
             }
-            i++;
         }
         if (!encontrou) System.out.println("Nenhum livro emprestado.");
     }
 
-    // ====================== MÉTODOS ALUNO ======================
-    private static void listarPorGenero(List<Livro> livros) {
+    private static void listarPorGenero() {
         System.out.print("\nDigite o gênero: ");
         String genero = sc.nextLine();
+        List<Livro> livros = livroController.listarTodosComoLista();
         boolean encontrou = false;
         System.out.println("\n===== LIVROS DO GÊNERO \"" + genero + "\" =====");
-        for (Livro l : livros) {
+        for (int i = 0; i < livros.size(); i++) {
+            Livro l = livros.get(i);
             if (l.getGenero().equalsIgnoreCase(genero)) {
-                System.out.println("- " + l);
+                System.out.printf("%d - %s (%s) - %s%n", i+1, l.getTitulo(), l.getGenero(), l.getEstado().getNomeEstado());
                 encontrou = true;
             }
         }
         if (!encontrou) System.out.println("Nenhum livro encontrado desse gênero.");
     }
 
-    private static void listarDisponiveis(List<Livro> livros) {
+    private static void listarDisponiveis() {
+        List<Livro> livros = livroController.listarTodosComoLista();
         System.out.println("\n===== LIVROS DISPONÍVEIS =====");
         boolean encontrou = false;
-        int i = 1;
-        for (Livro l : livros) {
+        for (int i = 0; i < livros.size(); i++) {
+            Livro l = livros.get(i);
             if (l.getEstado().getNomeEstado().equals("Disponível")) {
-                System.out.println(i + " - " + l);
+                System.out.printf("%d - %s (%s)%n", i+1, l.getTitulo(), l.getGenero());
                 encontrou = true;
             }
-            i++;
         }
         if (!encontrou) System.out.println("Nenhum livro disponível.");
     }
 
-    private static void solicitarEmprestimo(List<Livro> livros) {
-        listarDisponiveis(livros);
+    private static void solicitarEmprestimo() {
+        listarDisponiveis();
         System.out.print("\nEscolha o número do livro: ");
         int index = lerNumero() - 1;
-        if (index < 0 || index >= livros.size()) {
-            System.out.println("Livro não encontrado!");
-            return;
-        }
+        List<Livro> livros = livroController.listarTodosComoLista();
+        if (index < 0 || index >= livros.size()) { System.out.println("Livro não encontrado!"); return; }
+
         Livro livro = livros.get(index);
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 7);
-        livro.emprestar(cal.getTime());
-        System.out.println("✔ Empréstimo realizado com sucesso!");
+        livro.emprestar(new Date(System.currentTimeMillis() + 7L * 24 * 60 * 60 * 1000)); // 7 dias
+        livroController.listarTodosComoLista(); // garante atualização
+        System.out.println("Empréstimo realizado com sucesso!");
     }
 
-    // ====================== AUXILIAR ======================
+    // ===================== UTIL =====================
     private static int lerNumero() {
-        try {
-            return Integer.parseInt(sc.nextLine());
-        } catch (Exception e) {
-            System.out.println("Entrada inválida, tente novamente!");
-            return -1;
-        }
+        try { return Integer.parseInt(sc.nextLine()); }
+        catch (Exception e) { System.out.println("Entrada inválida, tente novamente!"); return -1; }
     }
 }
