@@ -15,8 +15,9 @@ O projeto foi desenvolvido com foco em **boas práticas de programação orienta
 - Pode ser **multado** em caso de atraso na devolução.  
 
 ### Funcionário
-- **Cadastra e remove livros** do sistema.  
-- **Altera o status** dos livros (disponível, emprestado, atrasado etc).  
+- **Cadastra e remove livros** do sistema.
+- **Lista Livros** disponíveis e emprestado.  
+- **Altera o status** dos livros (disponível e emprestado).  
 - **Gera multas** para alunos com devolução fora do prazo.  
 
 ---
@@ -34,6 +35,7 @@ Organiza o sistema em três camadas principais:
 ### **Factory**
 Responsável pela **criação de objetos** de forma centralizada e desacoplada.  
 Facilita a criação de diferentes tipos de usuários (como `Aluno` e `Funcionario`) sem modificar o código principal.
+
 ### **state**
 -	Implementado na classe Livro para representar o estado atual do livro.
 -	Permite identificar se o livro está disponível, emprestado ou atrasado, além de controlar as mudanças de estado conforme ações do sistema.
