@@ -33,9 +33,9 @@ public class MenuPrincipal {
         } while (opcao != 3);
     }
 
-    // =============================================================
-    // MENU BIBLIOTECÁRIO
-    // =============================================================
+
+    // ==================================== MENU BIBLIOTECÁRIO ====================================
+
     private static void menuBibliotecario(Bibliotecario biblio) {
 
         System.out.print("\nDigite seu CPF: ");
@@ -79,7 +79,7 @@ public class MenuPrincipal {
     }
 
     // =============================================================
-    // MENU ALUNO
+                        // MENU ALUNO
     // =============================================================
     private static void menuAluno() {
         int opcao;
@@ -103,9 +103,9 @@ public class MenuPrincipal {
         } while (opcao != 4);
     }
 
-    // =============================================================
-    // AÇÕES PRINCIPAIS
-    // =============================================================
+
+    // ==================================== AÇÕES PRINCIPAIS ====================================
+
     private static void cadastrarLivro() {
         System.out.print("\nTítulo: ");
         String titulo = sc.nextLine().trim();
@@ -165,9 +165,9 @@ public class MenuPrincipal {
         livroController.devolverLivro(livro.getTitulo());
     }
 
-    // =============================================================
-    // LISTAGENS
-    // =============================================================
+
+    // ============================ LISTAGENS ====================================
+
     private static void listarLivros() {
         List<Livro> livros = livroController.listarTodosComoLista();
         System.out.println("\n========== LIVROS CADASTRADOS ==========");
@@ -233,9 +233,9 @@ public class MenuPrincipal {
         if (!encontrou) System.out.println("Nenhum livro encontrado.");
     }
 
-    // =============================================================
-    // ALUNO SOLICITA EMPRÉSTIMO
-    // =============================================================
+
+    // ==================================== ALUNO SOLICITA EMPRÉSTIMO ====================================
+
     private static void solicitarEmprestimoAluno() {
         listarDisponiveis();
 
@@ -249,9 +249,9 @@ public class MenuPrincipal {
         System.out.println("Empréstimo realizado com sucesso!");
     }
 
-    // =============================================================
-    // UTILITÁRIOS
-    // =============================================================
+
+    // ==================================== UTILITÁRIOS ====================================
+
     private static Livro getLivroByIndex(int index) {
         List<Livro> livros = livroController.listarTodosComoLista();
         if (index < 0 || index >= livros.size()) {
