@@ -1,9 +1,7 @@
-# Biiblioteca
-===EM ANDAMENTO===
 # Sistema de Gerencimento de Biblioteca
 ## Descrição do Projeto
 O **Sistema de Gerenciamento de Biblioteca** é uma aplicação desenvolvida em **Java**, estruturada com o padrão de arquitetura **MVC (Model-View-Controller)**.  
-Seu objetivo é facilitar o controle de livros, alunos e funcionários de uma biblioteca, permitindo o **empréstimo de obras**, **gerenciamento de acervos** e **controle de multas** por atraso.
+Seu objetivo é facilitar o controle de livros, para alunos e funcionários de uma biblioteca, permitindo o **empréstimo de obras**, **gerenciamento de acervos** e **controle de multas** por atraso.
 
 O projeto foi desenvolvido com foco em **boas práticas de programação orientada a objetos** e no uso de **padrões de projeto** para garantir flexibilidade, reutilização e manutenção eficiente do código.
 
@@ -13,7 +11,7 @@ O projeto foi desenvolvido com foco em **boas práticas de programação orienta
 
 ### Aluno
 - Visualiza os livros disponíveis.  
-- Realiza **empréstimos** de livros.  
+- Reserva livros para **empréstimos**.  
 - Pode ser **multado** em caso de atraso na devolução.  
 
 ### Funcionário
