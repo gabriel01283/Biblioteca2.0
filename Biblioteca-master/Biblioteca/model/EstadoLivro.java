@@ -3,3 +3,4 @@ public interface EstadoLivro {
     void devolver(Livro livro);
     String getNomeEstado();
 }
+//define as ações que um estado precisa ter,baseado no padrão State

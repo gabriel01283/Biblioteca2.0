@@ -1,12 +1,12 @@
 import java.util.*;
 
 public class Livro {
-
+// prazo padrão de 7 dias para devolução
     private static final int PRAZO_PADRAO = 7;
 
     private String titulo;
     private String genero;
-    private EstadoLivro estado;
+    private EstadoLivro estado;//ligação com o State
     private Date dataEntrega;
     private Usuario emprestadoPara;
 
@@ -50,7 +50,7 @@ public class Livro {
             notificar("Livro devolvido.");
         }
     }
-
+//Registrar alguém como observador para notificar quando o livro mudar de estado
     public void adicionarObservador(ObservadorLivro obs) {
         if (obs != null && !observadores.contains(obs)) {
             observadores.add(obs);
@@ -60,8 +60,9 @@ public class Livro {
     public void removerObservador(ObservadorLivro obs) {
         observadores.remove(obs);
     }
-
+    //observe 
     private void notificar(String mensagem) {
+        //cria uma cópia
         for (ObservadorLivro obs : new ArrayList<>(observadores)) {
             obs.atualizar(this, mensagem);
         }

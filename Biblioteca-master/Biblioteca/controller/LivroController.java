@@ -2,23 +2,24 @@ import java.io.*;
 import java.util.*;
 
 public class LivroController {
-
+    //LISTA QUE GUARDA OS LIVROS DO SISTEMA
     private List<Livro> livros = new ArrayList<>();
     private static final String ARQUIVO = "livros.txt";
-
+// CONSTRUTOR
     public LivroController() {
         carregarLivros();
     }
 
-    // ===================== CADASTRAR =====================
+    // CADASTRAR
     public void cadastrarLivro(String titulo, String genero) {
+        // PADRAO STATE, LIVRO INICIA DISPONIVEL
         Livro livro = new Livro(titulo, genero, new Disponivel());
         livros.add(livro);
         salvarLivros();
         System.out.println("Livro cadastrado: " + titulo);
     }
 
-    // ===================== REMOVER =====================
+    //  REMOVER 
     public void removerLivro(String titulo) {
         Livro livro = buscarLivro(titulo);
         if (livro != null) {
@@ -30,7 +31,7 @@ public class LivroController {
         }
     }
 
-    // ===================== ALTERAR =====================
+    // ALTERAR 
     public void alterarGenero(String titulo, String novoGenero) {
         Livro livro = buscarLivro(titulo);
         if (livro != null) {
@@ -42,14 +43,18 @@ public class LivroController {
         }
     }
 
-    // ===================== EMPRESTAR =====================
+    //  EMPRESTAR
     public void emprestarLivro(String titulo, int diasEntrega) {
         Livro livro = buscarLivro(titulo);
         if (livro != null) {
-            livro.emprestar();
+
+            livro.setEstado(new Emprestado());
+                                    // pega a data de HOJE
             Calendar cal = Calendar.getInstance();
+            // SOMA A DATA DE HOJE PARA VERIFICAR A DATA DE ENTREGA
             cal.add(Calendar.DAY_OF_MONTH, diasEntrega);
             livro.setDataEntrega(cal.getTime());
+
             salvarLivros();
             System.out.println("Livro emprestado: " + titulo + ", data de entrega: " + livro.getDataEntrega());
         } else {
@@ -57,19 +62,21 @@ public class LivroController {
         }
     }
 
-    // ===================== DEVOLVER =====================
+    //  DEVOLVER
     public void devolverLivro(String titulo) {
         Livro livro = buscarLivro(titulo);
         if (livro != null) {
-            livro.devolver();
+
+            livro.setEstado(new Disponivel());
+            livro.setDataEntrega(null);
+
             salvarLivros();
             System.out.println("Livro devolvido: " + titulo);
         } else {
             System.out.println("Livro não encontrado: " + titulo);
         }
     }
-
-    // ===================== LISTAR =====================
+    // LISTAR
     public void listarLivros() {
         System.out.println("---- LISTA DE LIVROS ----");
         if (livros.isEmpty()) {
@@ -81,9 +88,10 @@ public class LivroController {
         }
     }
 
-    // ===================== BUSCAR =====================
+    //  BUSCAR
     private Livro buscarLivro(String titulo) {
         for (Livro l : livros) {
+            //COMPARA O LIVRO COM O QUE O USUARIO DIGITOU NO TERMINAL
             if (l.getTitulo().equalsIgnoreCase(titulo)) {
                 return l;
             }
@@ -91,20 +99,23 @@ public class LivroController {
         return null;
     }
 
-    // ===================== SALVAR =====================
+    //  SALVAR ARQUIVOS
     private void salvarLivros() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO))) {
             for (Livro l : livros) {
-                String estado = l.getEstado().getNomeEstado();
-                String data = l.getDataEntrega() != null ? String.valueOf(l.getDataEntrega().getTime()) : "";
-                pw.println(l.getTitulo() + ";" + l.getGenero() + ";" + estado + ";" + data);
+                pw.println(
+                        l.getTitulo() + ";" +
+                        l.getGenero() + ";" +
+                        l.getEstado().getNomeEstado() + ";" +
+                        (l.getDataEntrega() != null ? l.getDataEntrega().getTime() : "")
+                );
             }
         } catch (IOException e) {
             System.out.println("Erro ao salvar livros: " + e.getMessage());
         }
     }
 
-    // ===================== CARREGAR =====================
+    //  CARREGAR 
     private void carregarLivros() {
         File file = new File(ARQUIVO);
         if (!file.exists()) return;
@@ -113,13 +124,19 @@ public class LivroController {
             while (sc.hasNextLine()) {
                 String linha = sc.nextLine();
                 String[] partes = linha.split(";");
+
                 if (partes.length >= 3) {
                     String titulo = partes[0];
                     String genero = partes[1];
                     String estadoNome = partes[2];
-                    EstadoLivro estado = estadoNome.equals("Emprestado") ? new Emprestado() : new Disponivel();
-                    Livro livro = new Livro(titulo, genero, estado);
 
+                    EstadoLivro estado =
+                            estadoNome.equalsIgnoreCase("Emprestado")
+                                    ? new Emprestado()
+                                    : new Disponivel();
+
+                    Livro livro = new Livro(titulo, genero, estado);
+                                //VERIFICA SE O ARUIVO AS 4 PARTES PREENCHIDAS
                     if (partes.length == 4 && !partes[3].isEmpty()) {
                         long millis = Long.parseLong(partes[3]);
                         livro.setDataEntrega(new Date(millis));

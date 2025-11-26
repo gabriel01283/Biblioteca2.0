@@ -6,15 +6,16 @@ public class Bibliotecario implements Usuario {
     private String cpf;
     private String senha;
 
-    private LivroController livroController; // acesso ao CRUD
+    private LivroController livroController; // acesso ao CRUD DOS LIVROS 
 
     private Bibliotecario(String nome, String cpf, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.senha = senha;
+        //CONTROLADOR DE LIVROS
         this.livroController = new LivroController();
     }
-
+//CONFIRMA O CPF E SENHA
     public boolean autenticar(String cpf, String senha) {
         return this.cpf.equals(cpf) && this.senha.equals(senha);
     }
@@ -31,17 +32,13 @@ public class Bibliotecario implements Usuario {
         System.out.println("Sou o bibliotecário administrador do sistema.");
     }
 
-    @Override
-    public void separador() {
-        System.out.println("--------------------------------");
-    }
 
     @Override
     public String getNome() { return nome; }
 
     @Override
     public String getTipo() { return "Bibliotecário"; }
-
+// METODOS DO CONTROLLER DE LIVROS
     public void cadastrarLivro(String titulo, String genero) {
         livroController.cadastrarLivro(titulo, genero);
     }

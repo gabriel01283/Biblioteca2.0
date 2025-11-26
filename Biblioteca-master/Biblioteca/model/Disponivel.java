@@ -1,5 +1,6 @@
 public class Disponivel implements EstadoLivro {
     @Override
+    //MUDA O ESTADO DO LIVRO PARA EMPRESTADO
     public void emprestar(Livro livro) {
         livro.setEstado(new Emprestado());
     }

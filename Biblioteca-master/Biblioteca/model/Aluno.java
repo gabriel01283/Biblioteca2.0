@@ -1,7 +1,7 @@
 public class Aluno implements Usuario {
     private final String nome;
     private final String tipo;
-
+// FINAL= NÃO PODE SER ALTERADO
     public Aluno(String nome){
         this.nome = nome;
         this.tipo = "Aluno(a)";
@@ -12,10 +12,6 @@ public class Aluno implements Usuario {
         System.out.println("Sou um aluno(a)!");
     }
 
-    @Override
-    public void separador(){
-        System.out.println("#####################");
-    }
 
     @Override
     public String getNome(){
